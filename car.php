@@ -62,9 +62,55 @@
     if($_GET['id'] > 1000){
         header("Location:cars.php");
         exit();
-    }
+    };
+    $selectedCar= array_filter($cars, function($car){
+        return $car['id']== $_GET['id'];
+
+    });
+    
+    $selectedCar= reset($selectedCar);
+
+    if (!$selectedCar){
+        header("Location:cars.php");
+        exit();
+
+    };
+
+
+
     
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <h1 class = 'text-center text-primary mb-5'> Selected Car</h1>
+        <div class = 'card alert alert-primary fw-bold'>
+            <p><strong class= 'fst-italic text-primary'> Make: </strong><?= $selectedCar['make'];?></p>
+            <p><strong class= 'fst-italic text-primary'> Model: </strong><?= $selectedCar['model']; ?></p>
+            <p><strong class= 'fst-italic text-primary'> Daily Rate: </strong><?= $selectedCar['daily_rate']; ?></p>
+            <p><strong class= 'fst-italic text-primary'> Status: </strong><?= $selectedCar['status']; ?></p>
+        </div>
+        <a href = 'cars.php' class = 'btn btn-sm btn-primary'>Back to Home </a>
+
+        
+        
+        
+
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+   
+    
+</body>
+</html>
 
 
 
