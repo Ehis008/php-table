@@ -15,12 +15,19 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-    <div class = " container   mt-5 mb-5">
-        <h1 class = "text-center"> View User</h1>
-        <p><?= $first_name ?></p>
-        <p><?= $last_name ?></p>
-        <p><?= $email ?></p>
-        <p><?= $phone ?></p>
+    <div class = " container mt-5 mb-5">
+        <div class= "alert alert-primary text-center">
+            <h1 class = "text-primary"> View User</h1>
+            <p> View Users Details Here</p>
+        </div> 
+        <div class="card shadow-lg text-primary fst-italic ">
+            <p><strong>First name:</strong> <?= $first_name ?></p>
+            <p><strong>Last name:</strong> <?= $last_name ?></p>
+            <p><strong>Email Address:</strong> <?= $email ?></p>
+            <p><strong>Phone Number:</strong> <?= $phone ?></p>
+        
+        </div>   
+            
     </div>
   <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>  
 </body>
