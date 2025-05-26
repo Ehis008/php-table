@@ -93,8 +93,18 @@
                     <td class= "fst-italic"><?= $car['make']; ?></td>
                     <td class= "fst-italic"><?= $car['model']; ?></td>
                     <td class= "fst-italic"><?= $car['daily_rate']; ?></td>
-                    <td class= "fst-italic"><?= $car['status']; ?></td>
-                    <td><a href ="car.php?id=<?=$car['id'];?>" class = "btn btn-sm btn-success">View</a></td>
+                    <td><?php if ($car['status']==='available'){?>
+                        <button class= "btn btn-success"> Available</button>
+
+                        <?php }else{?>
+                            <button class= "btn btn-danger"> Rented</button>
+                          <?php }?>
+                        </td>
+                    <td><?php if ($car['status']==='available'){?>
+                        <a href ="car.php?id=<?=$car['id'];?>" class = "btn btn-sm btn-primary">View Car</a><?php }else{?>
+                            <button class= "btn btn-warning">Unavailable </button>
+                          <?php }?>
+                        </td>
 
                     
                     
