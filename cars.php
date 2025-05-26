@@ -55,6 +55,7 @@
     //     ]
     // ];
     require_once"config/db-connect.php";
+    
     $sql= "SELECT * FROM cars";
     $stmt= $pdo->prepare($sql);
     $stmt-> execute();
@@ -73,6 +74,7 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
+    <?php require"components/navbar.php";?>
     <div class = "mt-5 mb-5 container">
         <h1 class = "text-center text-success"> <?php echo "Car Rental" ?></h1>
         <div class = "alert alert-success mb-5 mt-5 text-center fst-italic"><h1> <?php echo "Rent A Car Here" ?></h1><br><p class = "fw-bold"> Get the best car deals </p>
