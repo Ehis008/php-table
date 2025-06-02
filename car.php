@@ -1,60 +1,15 @@
 <?php
-    // $cars=[
-    //         ["id"=> 1,
-    //         "make"=> "Toyota",
-    //         "model"=> "corolla",
-    //         "year"=> 2003,
-    //         "daily_rate"=> 30,
-    //         "status"=> "available",
-            
-    //         ],
-    //         [
-    //         "id"=> 2,            "make"=> "Nissan",
-    //         "model"=> "3 series",
-    //         "year"=> 2022,
-    //         "daily_rate"=> 50,
-    //         "status"=> "available"
-            
-    //         ],
-    //         [
-    //         "id"=> 3,
-    //         "make"=> "Honda",
-    //         "model"=> "Accord",
-    //         "year"=> 2006,
-    //         "daily_rate"=> 35,
-    //         "status"=> "pending",
-            
-    //         ],
-    //         [
-    //         "id"=> 4,
-    //         "make"=> "Toyota",
-    //         "model"=> "civic",
-    //         "year"=> "2009",
-    //         "daily_rate"=> 30, 
-    //         "status"=> "pending",
-            
-    //         ],
-    //     [
-    //         "id"=> 5,
-    //         "make"=> "Peugeout",
-    //         "model"=> 504,
-    //         "year"=> 2005,
-    //         "daily_rate"=> 20,
-    //         "status"=> "available",
-            
-    //     ],
-    //     [
-    //         "id"=> 6,
-    //         "make"=> "Ford",
-    //         "model"=> "Mustang",
-    //         "year"=> 2023,
-    //         "daily_rate"=> 60,
-    //         "status"=> "available",
-            
-    //     ]
-    // ];
+    
     require_once"config/db-connect.php";
     require_once"components/navbar.php";
+
+    session_start();
+     $_SESSION["first_name"];
+     $_SESSION["last_name"];
+     $_SESSION["phone"];
+     $_SESSION["email"];
+     $_SESSION["return_date"];
+
     
 
      if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
@@ -110,7 +65,7 @@
     <div class="container mt-5 mb-5 ">
         <form action= "processess/hire-process.php" method= "POST">
             <input type= "number" name= "daily_rate" value= "<?= $selectedCar['daily_rate']; ?>" hidden required class= "form-select mb-3">
-            <input type= "date" name= "return_date" required  class= "form-select mb-3" min="<?= date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+7days')); ?>"> 
+            <input type= "date" name= "return_date" value =<?= $_SESSION["first_name"];?> required  class= "form-select mb-3" min="<?= date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+7days')); ?>"> 
             <input type= "text" name= "first_name" required placeholder="Enter your first name" class= "form-select mb-3"> 
             <input type= "text" name= "last_name" required placeholder="Enter your last name" class= "form-select mb-3"> 
             <input type= "email" name= "email" required placeholder="Enter your email" class= "form-select mb-3"> 

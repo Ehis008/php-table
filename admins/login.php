@@ -44,8 +44,8 @@ foreach ($admins as $admin) {
     <div class ="mb-5 mt-5 container">
         <h1 class = "text-center text-primary"> Admin</h1>
         <form action="" method ="POST">
-            <input type= "text" class="form-control mb-3" placeholder= "Enter your name" name = "username" required>
-            <input type= "email" class="form-control mb-3" placeholder= "Enter your email" name = "email_address" required>
+            <input type= "text"  value = "<?=$_SESSION['username']?>"class="form-control mb-3" placeholder= "Enter your name" name = "username" required>
+            <input type= "email" value = "<?=$_SESSION['email_address']?>" class="form-control mb-3" placeholder= "Enter your email" name = "email_address" required>
             <button type = "submit" class ="btn btn-primary"> Log in</button>
         </form> 
          <div class = "alert alert-danger mt-3">

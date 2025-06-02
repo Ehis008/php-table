@@ -16,6 +16,8 @@ $_SESSION["last_name"]=$last_name;
 $_SESSION["phone"]=$phone;
 $_SESSION["email"]=$email;
 $_SESSION["return_date"]=$return_date;
+$_SESSION['error']=[];
+$_SESSION['success']=[];
 
  $rental_date_object= new DateTime($rental_date);
  $return_date_object = new DateTime($return_date);
