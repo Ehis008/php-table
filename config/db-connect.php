@@ -4,7 +4,11 @@ $user="root";
 $password="";
 $dbname="Car_Rental";
 
-$pdo= new PDO("mysql:host=$host; dbname=$dbname", $user, $password);
+    $pdo= new PDO("mysql:host=$host; dbname=$dbname", $user, $password);
+
+    //Set default fetch mode to FETCH-ASSOC
+   
+
 
 
 
