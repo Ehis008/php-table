@@ -33,8 +33,10 @@
             <th class = "text-success">Make</th>
             <th class = "text-success">Model</th>
             <th class = "text-success">Daily Rate</th>
+            <th class = "text-success">Image</th>
             <th class = "text-success">Status</th>
             <th class = "text-success">Actions</th>
+            
            
             <tbody>
                 <tr><?php foreach($cars as $car){?>
@@ -43,6 +45,7 @@
                     <td class= "fst-italic"><?= $car['make']; ?></td>
                     <td class= "fst-italic"><?= $car['model']; ?></td>
                     <td class= "fst-italic"><?= $car['daily_rate']; ?></td>
+                    <td> <img src ="<?=$car['image']?>"></td>
                     <td><?php if ($car['status']==='available'){?>
                         <button class= "btn btn-success"> Available</button>
 
