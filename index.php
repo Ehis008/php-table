@@ -1,3 +1,10 @@
+<?php
+ session_start();
+$_SESSION['success']= "you";
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -9,6 +9,7 @@
      $_SESSION["phone"];
      $_SESSION["email"];
      $_SESSION["return_date"];
+     $_SESSION['error'];
 
     
 
@@ -35,6 +36,11 @@
         exit();
  
     };
+    if($selectedCar['status']==="rented"){
+        header("Location:cars.php");
+        exit();
+        
+    }
      date('Y-m-d');
     date('Y-m-d', strtotime('+7days'));
 
@@ -65,11 +71,51 @@
     <div class="container mt-5 mb-5 ">
         <form action= "processess/hire-process.php" method= "POST">
             <input type= "number" name= "daily_rate" value= "<?= $selectedCar['daily_rate']; ?>" hidden required class= "form-select mb-3">
-            <input type= "date" name= "return_date" value =<?= $_SESSION["first_name"];?> required  class= "form-select mb-3" min="<?= date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+7days')); ?>"> 
-            <input type= "text" name= "first_name" required placeholder="Enter your first name" class= "form-select mb-3"> 
-            <input type= "text" name= "last_name" required placeholder="Enter your last name" class= "form-select mb-3"> 
-            <input type= "email" name= "email" required placeholder="Enter your email" class= "form-select mb-3"> 
-            <input type= "tel" name= "phone" required placeholder="Enter your phone" class= "form-select mb-3">
+            <input type= "date" name= "return_date" value =<?= $_SESSION["return_date"];?> required  class= "form-select mb-3" min="<?= date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+7days')); ?>"> 
+           <input type="text" name="first_name" 
+    value="<?php 
+        if (isset($_SESSION['first_name'])) {
+            echo htmlspecialchars($_SESSION['first_name']);
+            unset($_SESSION['first_name']);
+        }
+    ?>" 
+    required 
+    placeholder="Enter your first name" 
+    class="form-select mb-3">
+
+            <input type="text" name="last_name"
+    value="<?php 
+        if (isset($_SESSION['last_name'])) {
+            echo htmlspecialchars($_SESSION['last_name']);
+            unset($_SESSION['last_name']);
+        }
+    ?>" 
+    required 
+    placeholder="Enter your last name" 
+    class="form-select mb-3">
+
+<input type="email" name="email"
+    value="<?php 
+        if (isset($_SESSION['email'])) {
+            echo htmlspecialchars($_SESSION['email']);
+            unset($_SESSION['email']);
+        }
+    ?>" 
+    required 
+    placeholder="Enter your email" 
+    class="form-select mb-3">
+
+<input type="tel" name="phone"
+    value="<?php 
+        if (isset($_SESSION['phone'])) {
+            echo htmlspecialchars($_SESSION['phone']);
+            unset($_SESSION['phone']);
+        }
+    ?>" 
+    required 
+    placeholder="Enter your phone" 
+    class="form-select mb-3">
+
             <input type= "number" name= "car_id" required value="<?=$selected_Car_id ?>" hidden class= "form-select mb-3">
             <button class ="btn btn-sm btn-primary" type= "submit">Hire</button> 
         </form>

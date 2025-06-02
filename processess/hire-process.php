@@ -16,8 +16,9 @@ $_SESSION["last_name"]=$last_name;
 $_SESSION["phone"]=$phone;
 $_SESSION["email"]=$email;
 $_SESSION["return_date"]=$return_date;
-$_SESSION['error']=[];
-$_SESSION['success']=[];
+$_SESSION['success']= "You have successfully hired a car!";
+
+
 
  $rental_date_object= new DateTime($rental_date);
  $return_date_object = new DateTime($return_date);
@@ -38,8 +39,10 @@ $_SESSION['success']=[];
     $sql= "UPDATE cars SET `status` = 'rented' WHERE id= ?";
     $stmt=$pdo->prepare($sql);
     $stmt->execute([$car_id]);
+    $_SESSION['success'];
 
-    header("Location:../cars.php");
+   header("Location:../cars.php");
+
  } else {
     $sql="INSERT INTO customers(first_name, last_name,phone,email) VALUES(?,?,?,?)";
     $stmt= $pdo->prepare($sql);
@@ -58,7 +61,8 @@ $_SESSION['success']=[];
     $sql= "UPDATE cars SET `status` = 'rented' WHERE id= ?";
     $stmt=$pdo->prepare($sql);
     $stmt->execute([$car_id]);
-       header("Location:../cars.php");
+    header("Location:../cars.php");
+     
 
 
 
