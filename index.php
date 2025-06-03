@@ -18,6 +18,8 @@ $_SESSION['success']= "you";
     <h1 class = "text-center text-success mt-5 mb-5"> Welcome To Beloved's Car Rental</h1>
     <div class = "mt-5 mb-5 container">
 
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     
 </body>
 </html>

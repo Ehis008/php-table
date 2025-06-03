@@ -16,7 +16,6 @@ $_SESSION["last_name"]=$last_name;
 $_SESSION["phone"]=$phone;
 $_SESSION["email"]=$email;
 $_SESSION["return_date"]=$return_date;
-$_SESSION['success']= "You have successfully hired a car!";
 
 
 
@@ -29,6 +28,26 @@ $_SESSION['success']= "You have successfully hired a car!";
  $stmt= $pdo->prepare($sql);
  $stmt->execute([$email]);
  $customer=$stmt->fetch (PDO::FETCH_ASSOC);
+
+ if(empty ($first_name)){
+  header("Location:../register.php");
+  exit();
+ }
+ if(empty ($last_name)){
+         header("Location:../register.php");
+         exit();
+     }
+ if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+      header("Location:../register.php");
+         exit();
+    
+ }
+ if(!ctype_digit($phone)){
+     header("Location:../register.php");
+     exit();
+ }
+     header("Location:../dashboard.php");
+
 
  if ($customer) {
     $customer_id = $customer['id'];
@@ -62,36 +81,7 @@ $_SESSION['success']= "You have successfully hired a car!";
     $stmt=$pdo->prepare($sql);
     $stmt->execute([$car_id]);
     header("Location:../cars.php");
-     
-
-
-
-
-     
-    }
- 
-
-
-
-// if(empty ($first_name)){
-//         header("Location:../register.php");
-//         exit();
-//     }
-// if(empty ($last_name)){
-//         header("Location:../register.php");
-//         exit();
-//     }
-// if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-//      header("Location:../register.php");
-//         exit();
-    
-// }
-// if(!ctype_digit($phone)){
-//     header("Location:../register.php");
-//     exit();
-// }
-//     header("Location:../dashboard.php");
-
+      }
 
 ?>
 

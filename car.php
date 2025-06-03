@@ -9,7 +9,6 @@
      $_SESSION["phone"];
      $_SESSION["email"];
      $_SESSION["return_date"];
-     $_SESSION['error'];
 
     
 
@@ -71,7 +70,7 @@
     <div class="container mt-5 mb-5 ">
         <form action= "processess/hire-process.php" method= "POST">
             <input type= "number" name= "daily_rate" value= "<?= $selectedCar['daily_rate']; ?>" hidden required class= "form-select mb-3">
-            <input type= "date" name= "return_date" value =<?= $_SESSION["return_date"];?> required  class= "form-select mb-3" min="<?= date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+7days')); ?>"> 
+            <input type= "date" name= "return_date" required  class= "form-select mb-3" min="<?= date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+7days')); ?>"> 
            <input type="text" name="first_name" 
     value="<?php 
         if (isset($_SESSION['first_name'])) {
