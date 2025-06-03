@@ -2,7 +2,6 @@
 session_start();
 require_once"config/db-connect.php";
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $lastname=trim($_POST['lastname']);
     $email=trim($_POST['email']);
