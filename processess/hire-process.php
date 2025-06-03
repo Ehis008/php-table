@@ -16,6 +16,34 @@ $_SESSION["last_name"]=$last_name;
 $_SESSION["phone"]=$phone;
 $_SESSION["email"]=$email;
 $_SESSION["return_date"]=$return_date;
+$_SESSION['user_input']=[
+   'first_name'=> $first_name,
+   'last_name'=>$last_name,
+   'email'=>$email,
+   'phone'=>$phone
+];
+
+if(empty ($first_name)){
+   $_SESSION['error']="First name is required";
+  header("Location:../car.php?id=$car_id");
+  exit();
+ }
+ if(empty ($last_name)){
+         $_SESSION['error']="Last name is required";
+  header("Location:../car.php?id=$car_id");
+  exit();
+     }
+ if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+      $_SESSION['error']="Enter a valid email address";
+  header("Location:../car.php?id=$car_id");
+  exit();
+    
+ }
+ if(!ctype_digit($phone)){
+     $_SESSION['error']="Enter a valid phone number";
+  header("Location:../car.php?id=$car_id");
+  exit();
+ }
 
 
 
@@ -29,25 +57,6 @@ $_SESSION["return_date"]=$return_date;
  $stmt->execute([$email]);
  $customer=$stmt->fetch (PDO::FETCH_ASSOC);
 
- if(empty ($first_name)){
-  header("Location:../register.php");
-  exit();
- }
- if(empty ($last_name)){
-         header("Location:../register.php");
-         exit();
-     }
- if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-      header("Location:../register.php");
-         exit();
-    
- }
- if(!ctype_digit($phone)){
-     header("Location:../register.php");
-     exit();
- }
-     header("Location:../dashboard.php");
-
 
  if ($customer) {
     $customer_id = $customer['id'];
@@ -58,9 +67,8 @@ $_SESSION["return_date"]=$return_date;
     $sql= "UPDATE cars SET `status` = 'rented' WHERE id= ?";
     $stmt=$pdo->prepare($sql);
     $stmt->execute([$car_id]);
-    $_SESSION['success'];
-
-   header("Location:../cars.php");
+    $_SESSION['success']= "You have successfully hired a car";
+      header("Location:../cars.php");
 
  } else {
     $sql="INSERT INTO customers(first_name, last_name,phone,email) VALUES(?,?,?,?)";
@@ -80,7 +88,9 @@ $_SESSION["return_date"]=$return_date;
     $sql= "UPDATE cars SET `status` = 'rented' WHERE id= ?";
     $stmt=$pdo->prepare($sql);
     $stmt->execute([$car_id]);
-    header("Location:../cars.php");
+
+    $_SESSION['success']= "You have successfully hired a car";
+      header("Location:../cars.php");
       }
 
 ?>

@@ -10,6 +10,11 @@
      $_SESSION["email"];
      $_SESSION["return_date"];
 
+     $error=$_SESSION['error'] ?? null;
+     $user_input=$_SESSION['user_input'] ?? [];
+     unset($_SESSION['error']);
+     unset($_SESSION['user_input']); 
+
     
 
      if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
@@ -56,6 +61,13 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
+    <?php if($error): ?>
+        <div class = "alert alert-danger">
+            <?= $error ?>
+        </div>
+     <?php endif; ?>       
+
+    
     <div class="container mt-5 mb-5">
         <h1 class = 'text-center text-primary mb-5'> Selected Car</h1>
         <div class = 'card alert alert-primary fw-bold'>
@@ -71,50 +83,10 @@
         <form action= "processess/hire-process.php" method= "POST">
             <input type= "number" name= "daily_rate" value= "<?= $selectedCar['daily_rate']; ?>" hidden required class= "form-select mb-3">
             <input type= "date" name= "return_date" required  class= "form-select mb-3" min="<?= date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+7days')); ?>"> 
-           <input type="text" name="first_name" 
-    value="<?php 
-        if (isset($_SESSION['first_name'])) {
-            echo htmlspecialchars($_SESSION['first_name']);
-            unset($_SESSION['first_name']);
-        }
-    ?>" 
-    required 
-    placeholder="Enter your first name" 
-    class="form-select mb-3">
-
-            <input type="text" name="last_name"
-    value="<?php 
-        if (isset($_SESSION['last_name'])) {
-            echo htmlspecialchars($_SESSION['last_name']);
-            unset($_SESSION['last_name']);
-        }
-    ?>" 
-    required 
-    placeholder="Enter your last name" 
-    class="form-select mb-3">
-
-<input type="email" name="email"
-    value="<?php 
-        if (isset($_SESSION['email'])) {
-            echo htmlspecialchars($_SESSION['email']);
-            unset($_SESSION['email']);
-        }
-    ?>" 
-    required 
-    placeholder="Enter your email" 
-    class="form-select mb-3">
-
-<input type="tel" name="phone"
-    value="<?php 
-        if (isset($_SESSION['phone'])) {
-            echo htmlspecialchars($_SESSION['phone']);
-            unset($_SESSION['phone']);
-        }
-    ?>" 
-    required 
-    placeholder="Enter your phone" 
-    class="form-select mb-3">
-
+            <input type="text" name="first_name" value="<?= htmlspecialchars( $user_input['first_name']?? '')?>" required placeholder="Enter your first name" class="form-select mb-3">
+            <input type="text" name="last_name" value= "<?= htmlspecialchars( $user_input['last_name']?? '')?>" required placeholder="Enter your last name" class="form-select mb-3">
+            <input type="email" name="email" value= "<?= htmlspecialchars( $user_input['email']?? '')?>" required placeholder="Enter your email" class="form-select mb-3">
+            <input type="tel" name="phone"value= "<?= htmlspecialchars( $user_input['phone']?? '')?>" required placeholder="Enter your phone" class="form-select mb-3">
             <input type= "number" name= "car_id" required value="<?=$selected_Car_id ?>" hidden class= "form-select mb-3">
             <button class ="btn btn-sm btn-primary" type= "submit">Hire</button> 
         </form>
