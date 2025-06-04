@@ -48,8 +48,12 @@
      date('Y-m-d');
     date('Y-m-d', strtotime('+7days'));
 
+    
+     
 
+    
 
+    
     
 ?>
 <!DOCTYPE html>
@@ -75,6 +79,7 @@
             <p><strong class= 'fst-italic text-primary'> Model: </strong><?= $selectedCar['model']; ?></p>
             <p><strong class= 'fst-italic text-primary'> Daily Rate: </strong>$<?= $selectedCar['daily_rate']; ?></p>
             <p><strong class= 'fst-italic text-primary'> Status: </strong><?= $selectedCar['status']; ?></p>
+            <img src="carimages/<?=$selectedCar['image'];?>"/>
         </div>
         <a href = 'cars.php' class = 'btn btn-sm btn-primary'>Back to Home </a>
 
@@ -98,12 +103,10 @@
 
     </div>
     <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-   
-    
 </body>
 </html>
+
+
 
 
 

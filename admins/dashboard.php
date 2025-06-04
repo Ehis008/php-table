@@ -23,7 +23,7 @@ $result_cars = $stmt_cars->fetch(PDO::FETCH_ASSOC);
 $total_cars = $result_cars['total_cars'];
 
 // Get total rentals
-$sql_total_rentals = "SELECT COUNT(*) AS total_rentals FROM rentals";
+$sql_total_rentals = "SELECT COUNT(*) AS total_rentals FROM rental";
 $stmt_rentals = $pdo->prepare($sql_total_rentals);
 $stmt_rentals->execute();
 $result_rentals = $stmt_rentals->fetch(PDO::FETCH_ASSOC);
@@ -42,6 +42,19 @@ $stmt_available = $pdo->prepare($sql_available);
 $stmt_available->execute();
 $result_available = $stmt_available->fetch(PDO::FETCH_ASSOC);
 $total_available = $result_available['total_available'];
+
+$sql = "SELECT rental.rental_date, rental.return_date, rental.rental_status, rental.total_cost,
+               customers.first_name AS first_name, customers.last_name AS last_name,
+               cars.make, cars.model, cars.daily_rate
+        FROM rental
+        JOIN customers ON rental.customer_id = customers.id
+        JOIN cars ON rental.car_id = cars.id
+        ORDER BY rental.rental_date DESC
+        LIMIT 5";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$recent_rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -55,6 +68,12 @@ $total_available = $result_available['total_available'];
   <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
+  <?php 
+  
+  require "../components/adminNavbar.php";
+  
+  ?>
+
 <div class="container mt-5">
   <h2 class="text-center text-primary mb-4">Admin Dashboard</h2>
 
@@ -104,6 +123,48 @@ $total_available = $result_available['total_available'];
       </div>
     </div>
   </div>
+</div>
+
+<div class="container mt-5">
+  <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Customer Name</th>
+            <th>Car Name</th>
+            <th>Daily Rate</th>
+            <th>Rental Date</th>
+            <th>Return Date</th>
+            <th>Total Cost</th>
+            <th>Rental Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($recent_rentals as $rental): ?>
+        <tr>
+            <td><?= htmlspecialchars($rental['first_name'].' '.$rental['last_name']) ?></td>
+            <td><?= htmlspecialchars($rental['make'] . ' ' . $rental['model']) ?></td>
+            <td>$<?= htmlspecialchars($rental['daily_rate']) ?></td>
+            <td><?= htmlspecialchars($rental['rental_date']) ?></td>
+            <td><?= htmlspecialchars($rental['return_date']) ?></td>
+            <td>$<?= htmlspecialchars($rental['total_cost']) ?></td>
+            <td>
+                <?php
+                    $return_date = $rental['return_date'];
+                    $status = $rental['rental_status'];
+                    $today = date('Y-m-d');
+
+                    if ($status === 'active' && $return_date <= $today) {
+                        echo '<span class="text-danger">Due for return</span>';
+                    } else {
+                        echo htmlspecialchars($status);
+                    }
+                ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
 </div>
 
 <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
