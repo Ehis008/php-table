@@ -59,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../assets/css/admin-login.css">
 </head>
 <body>
-    <?php require_once "../components/navbar.php"; ?>
 
     <!-- Header Section -->
     <section class="header-section">

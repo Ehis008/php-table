@@ -69,14 +69,14 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <?php if ($car['status'] === 'available'): ?>
                                             <span class="badge bg-primary">Available</span>
                                         <?php else: ?>
-                                            <span class="badge bg-warning">Rented</span>
+                                            <span class="badge bg-secondary">Rented</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($car['status'] === 'available'): ?>
                                             <a href="car.php?id=<?php echo $car['id']; ?>" class="btn btn-primary btn-sm">View Car</a>
                                         <?php else: ?>
-                                            <button class="btn btn-warning btn-sm" disabled>Unavailable</button>
+                                            <button class="btn btn-secondary btn-sm" disabled>Unavailable</button>
                                         <?php endif; ?>
                                     </td>
                                 </tr>

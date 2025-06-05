@@ -1,15 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 body {
-    background-color: #1a1a1a;
+    background-color: #1c2526;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    margin: 0;
+}
+
+main {
+    flex: 1; /* Content takes available space, pushing footer down */
+}
+
+footer {
+    background-color: #111;
+    color: #ffffff;
+    padding: 1rem 0;
+    width: 100%;
 }
 
 .header-section {
     padding: 3rem 0;
     text-align: center;
-    background: linear-gradient(180deg, #2c2c2c, #1a1a1a);
+    background: linear-gradient(180deg, #2c2c2c, #1c2526);
 }
 
 .header-section h1 {
@@ -19,7 +34,7 @@ body {
 }
 
 .card {
-    background-color: #2c2c2c;
+    background-color: #333333;
     border: none;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -30,24 +45,28 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.table {
-    background-color: #2c2c2c;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.table-dark th {
+.btn-primary {
     background-color: #0d6efd;
-    color: #ffffff;
+    border-color: #0d6efd;
+    transition: background-color 0.3s ease;
 }
 
-.table-dark td {
-    background-color: #2c2c2c;
-    color: #ffffff;
+.btn-primary:hover {
+    background-color: #005cbf;
 }
 
-.table-hover tbody tr:hover {
-    background-color: #333;
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.alert {
+    animation: fadeIn 0.5s ease-in;
 }
 
 @keyframes fadeIn {
@@ -58,8 +77,5 @@ body {
 @media (max-width: 768px) {
     .header-section h1 {
         font-size: 2rem;
-    }
-    .table {
-        font-size: 0.9rem;
     }
 }

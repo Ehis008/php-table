@@ -3,7 +3,7 @@
 // Handle logout
 if (isset($_POST['logout'])) {
     session_destroy();
-    header("Location: ../admin/login.php");
+    header("Location: ../admins/login.php");
     exit();
 }
 ?>
@@ -19,21 +19,42 @@ if (isset($_POST['logout'])) {
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-  <a class="navbar-brand" href="dashboard.php">Admin Dashboard</a>
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav me-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="manage-cars.php">Manage Cars</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="manage-rentals.php">Manage Rentals</a>
-      </li>
-    </ul>
-    <form method="post" class="d-flex">
-      <button type="submit" name="logout" class="btn btn-outline-light">Logout</button>
-    </form>
-  </div>
+<style>
+    .nav-link i, .btn i {
+        margin-right: 0.5rem; /* Space between icon and text */
+        font-size: 1.1rem; /* Slightly larger icons */
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" href="/index.php"><i class="bi bi-car-front"></i> DriveLite Rentals</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="adminNavbar">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/index.php"><i class="bi bi-house"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/dashboard.php"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/manage-cars.php"><i class="bi bi-car-front"></i> Manage Cars</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/manage-rentals.php"><i class="bi bi-calendar-check"></i> Manage Rentals</a>
+                </li>
+            </ul>
+            <?php if (isset($_SESSION['admin_id'])): ?>
+                <span class="navbar-text me-3"><i class="bi bi-person"></i> Admin</span>
+                <a href="/logout.php" class="btn btn-outline-danger"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            <?php else: ?>
+                <a href="/admin/login.php" class="btn btn-primary"><i class="bi bi-person"></i> Admin Login</a>
+            <?php endif; ?>
+        </div>
+    </div>
 </nav>
 
     

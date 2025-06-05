@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 body {
-    background-color: #1a1a1a;
+    background-color: #1c2526; /* Slightly greyish dark, matching other pages */
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
 }
@@ -9,7 +9,7 @@ body {
 .header-section {
     padding: 3rem 0;
     text-align: center;
-    background: linear-gradient(180deg, #2c2c2c, #1a1a1a);
+    background: linear-gradient(180deg, #2c2c2c, #1c2526);
 }
 
 .header-section h1 {
@@ -19,7 +19,7 @@ body {
 }
 
 .card {
-    background-color: #2c2c2c;
+    background-color: #333333; /* Lighter grey for better text visibility */
     border: none;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -31,31 +31,33 @@ body {
 }
 
 .table {
-    background-color: #2c2c2c;
+    background-color: #333333; /* Lighter grey for table */
     border-radius: 10px;
     overflow: hidden;
 }
 
 .table-dark th {
-    background-color: #0d6efd;
+    background-color: #0d6efd; /* Muted blue */
     color: #ffffff;
 }
 
 .table-dark td {
-    background-color: #2c2c2c;
+    background-color: #333333;
     color: #ffffff;
 }
 
 .table-hover tbody tr:hover {
-    background-color: #333;
+    background-color: #3c3c3c; /* Slightly lighter hover */
 }
 
-.btn-success {
+.btn-primary {
+    background-color: #0d6efd; /* Muted blue */
+    border-color: #0d6efd;
     transition: background-color 0.3s ease;
 }
 
-.btn-success:hover {
-    background-color: #28a745;
+.btn-primary:hover {
+    background-color: #005cbf; /* Darker blue on hover */
 }
 
 .alert {

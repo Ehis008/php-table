@@ -57,9 +57,9 @@ $rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Rentals - DriveLite Rentals</title>
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../assets/css/admin-manage-rentals.css">
+    <link rel="stylesheet" href="/assets/css/admin-manage-rentals.css">
 </head>
 <body>
     <?php require_once "../components/adminNavbar.php"; ?>
@@ -119,7 +119,7 @@ $rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         $status = $rental['rental_status'];
                                         $today = date('Y-m-d');
                                         if ($status === 'active' && $return_date <= $today) {
-                                            echo '<span class="badge bg-danger">Due for return</span>';
+                                            echo '<span class="badge bg-primary">Due for return</span>';
                                         } else {
                                             echo '<span class="badge bg-primary">' . htmlspecialchars($status) . '</span>';
                                         }
@@ -130,7 +130,7 @@ $rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <form method="POST" style="display:inline;">
                                                 <input type="hidden" name="rental_id" value="<?php echo $rental['rental_id']; ?>">
                                                 <input type="hidden" name="car_id" value="<?php echo $rental['car_id']; ?>">
-                                                <button type="submit" name="mark_returned" class="btn btn-sm btn-success">Mark as Returned</button>
+                                                <button type="submit" name="mark_returned" class="btn btn-primary btn-sm">Mark as Returned</button>
                                             </form>
                                         <?php else: ?>
                                             <span class="text-muted">Returned</span>
@@ -147,6 +147,6 @@ $rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php require_once "../components/footer.php"; ?>
 
-    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -8,47 +8,22 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-// Get total customers
-$sql_total_customers = "SELECT COUNT(*) AS total_customers FROM customers";
-$stmt_customers = $pdo->prepare($sql_total_customers);
-$stmt_customers->execute();
-$total_customers = $stmt_customers->fetch(PDO::FETCH_ASSOC)['total_customers'];
 
-// Get total cars
-$sql_total_cars = "SELECT COUNT(*) AS total_cars FROM cars";
-$stmt_cars = $pdo->prepare($sql_total_cars);
+// Fetch dashboard stats
+$sql_cars = "SELECT COUNT(*) AS total_cars FROM cars";
+$stmt_cars = $pdo->prepare($sql_cars);
 $stmt_cars->execute();
 $total_cars = $stmt_cars->fetch(PDO::FETCH_ASSOC)['total_cars'];
 
-// Get total rentals
-$sql_total_rentals = "SELECT COUNT(*) AS total_rentals FROM rental";
-$stmt_rentals = $pdo->prepare($sql_total_rentals);
+$sql_rentals = "SELECT COUNT(*) AS active_rentals FROM rental WHERE rental_status = 'active'";
+$stmt_rentals = $pdo->prepare($sql_rentals);
 $stmt_rentals->execute();
-$total_rentals = $stmt_rentals->fetch(PDO::FETCH_ASSOC)['total_rentals'];
+$active_rentals = $stmt_rentals->fetch(PDO::FETCH_ASSOC)['active_rentals'];
 
-// Get total rented cars
-$sql_rented = "SELECT COUNT(*) AS total_rented FROM cars WHERE status = 'rented'";
-$stmt_rented = $pdo->prepare($sql_rented);
-$stmt_rented->execute();
-$total_rented = $stmt_rented->fetch(PDO::FETCH_ASSOC)['total_rented'];
-
-// Get total available cars
-$sql_available = "SELECT COUNT(*) AS total_available FROM cars WHERE status = 'available'";
-$stmt_available = $pdo->prepare($sql_available);
-$stmt_available->execute();
-$total_available = $stmt_available->fetch(PDO::FETCH_ASSOC)['total_available'];
-
-// Get recent rentals
-$sql = "SELECT rental.rental_date, rental.return_date, rental.rental_status, rental.total_cost,
-               customers.first_name, cars.make, cars.model, cars.daily_rate, cars.image
-        FROM rental
-        JOIN customers ON rental.customer_id = customers.id
-        JOIN cars ON rental.car_id = cars.id
-        ORDER BY rental.rental_date DESC
-        LIMIT 5";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$recent_rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$sql_earnings = "SELECT SUM(total_cost) AS total_earnings FROM rental";
+$stmt_earnings = $pdo->prepare($sql_earnings);
+$stmt_earnings->execute();
+$total_earnings = $stmt_earnings->fetch(PDO::FETCH_ASSOC)['total_earnings'] ?? 0;
 ?>
 
 <!DOCTYPE html>
@@ -67,101 +42,42 @@ $recent_rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Header Section -->
     <section class="header-section">
         <div class="container">
-            <h1>Admin Dashboard</h1>
-            <p class="lead">Manage your car rental business.</p>
+            <h1 class="text-white"><?php echo "Welcome ". $_SESSION['admin_username'];?></h1>
+            <p class="lead">Manage your car rental business efficiently.</p>
         </div>
     </section>
 
-    <!-- Stats Cards -->
+    <!-- Stats Section -->
     <section class="py-5">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card text-white">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Customers</h5>
-                            <p class="display-6 fw-bold"><?php echo htmlspecialchars($total_customers); ?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-white">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Total Cars</h5>
-                            <p class="display-6 fw-bold"><?php echo htmlspecialchars($total_cars); ?></p>
+                            <p class="display-4"><?php echo $total_cars; ?></p>
+                            <a href="manage-cars.php" class="btn btn-primary">Manage Cars</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card text-white">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Total Rentals</h5>
-                            <p class="display-6 fw-bold"><?php echo htmlspecialchars($total_rentals); ?></p>
+                            <h5 class="card-title">Active Rentals</h5>
+                            <p class="display-4"><?php echo $active_rentals; ?></p>
+                            <a href="manage-rentals.php" class="btn btn-primary">Manage Rentals</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card text-white">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Total Rented Cars</h5>
-                            <p class="display-6 fw-bold"><?php echo htmlspecialchars($total_rented); ?></p>
+                            <h5 class="card-title">Total Earnings</h5>
+                            <p class="display-4">$<?php echo number_format($total_earnings, 2); ?></p>
+                            <a href="manage-rentals.php" class="btn btn-primary">View Earnings</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card text-white">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Available Cars</h5>
-                            <p class="display-6 fw-bold"><?php echo htmlspecialchars($total_available); ?></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Recent Rentals -->
-    <section class="py-5">
-        <div class="container">
-            <h3 class="mb-4">Recent Rentals</h3>
-            <div class="table-responsive">
-                <table class="table table-dark table-hover">
-                    <thead>
-                        <tr>
-                            <th>Customer Name</th>
-                            <th>Car</th>
-                            <th>Daily Rate</th>
-                            <th>Rental Date</th>
-                            <th>Return Date</th>
-                            <th>Total Cost</th>
-                            <th>Rental Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($recent_rentals as $rental): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($rental['first_name']); ?></td>
-                                <td><?php echo htmlspecialchars($rental['make'] . ' ' . $rental['model']); ?></td>
-                                <td>$<?php echo number_format($rental['daily_rate'], 2); ?></td>
-                                <td><?php echo htmlspecialchars($rental['rental_date']); ?></td>
-                                <td><?php echo htmlspecialchars($rental['return_date']); ?></td>
-                                <td>$<?php echo number_format($rental['total_cost'], 2); ?></td>
-                                <td>
-                                    <?php
-                                    $return_date = $rental['return_date'];
-                                    $status = $rental['rental_status'];
-                                    $today = date('Y-m-d');
-                                    if ($status === 'active' && $return_date <= $today) {
-                                        echo '<span class="badge bg-danger">Due for return</span>';
-                                    } else {
-                                        echo '<span class="badge bg-primary">' . htmlspecialchars($status) . '</span>';
-                                    }
-                                    ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
             </div>
         </div>
     </section>
