@@ -57,6 +57,12 @@ if(empty ($first_name)){
  $stmt->execute([$email]);
  $customer=$stmt->fetch (PDO::FETCH_ASSOC);
 
+ $sql = "SELECT make, model FROM cars WHERE id =?";
+ $stmt = $pdo->prepare($sql);
+ $stmt->execute([$car_id]);
+ $car = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
 
  if ($customer) {
     $customer_id = $customer['id'];
@@ -67,7 +73,7 @@ if(empty ($first_name)){
     $sql= "UPDATE cars SET `status` = 'rented' WHERE id= ?";
     $stmt=$pdo->prepare($sql);
     $stmt->execute([$car_id]);
-    $_SESSION['success']= "You have successfully hired a car";
+    $_SESSION['success']= "You have successfully hired"." ".$car['make']. " ".$car['model'];
       header("Location:../cars.php");
 
  } else {

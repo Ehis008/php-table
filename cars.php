@@ -7,7 +7,7 @@ $success = $_SESSION['success'] ?? null;
 unset($_SESSION['success']);
 
 // Fetch all cars
-$sql = "SELECT id, make, model, daily_rate, status, image FROM cars";
+$sql = "SELECT * FROM cars";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);

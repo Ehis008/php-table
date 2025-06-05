@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid px-4">
         <a class="navbar-brand" href="index.php">DriveLite Rentals</a>
@@ -16,10 +15,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="terms.php">Terms</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admins/login.php">Admin</a>
+                </li>
             </ul>
             <?php if (isset($_SESSION['customer_id'])): ?>
-                <a href="myrentals.php" class="btn btn-primary-light me-2">My Rentals</a>
-                <a href="logout.php" class="btn btn-outline-danger">Logout</a>
+                <a href="logout.php" class="btn btn-outline-light">Logout</a>
             <?php else: ?>
                 <a href="login.php" class="btn btn-primary-light">Login</a>
             <?php endif; ?>
