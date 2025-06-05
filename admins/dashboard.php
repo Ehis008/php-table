@@ -9,11 +9,22 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 
-// Fetch dashboard stats
 $sql_cars = "SELECT COUNT(*) AS total_cars FROM cars";
 $stmt_cars = $pdo->prepare($sql_cars);
 $stmt_cars->execute();
 $total_cars = $stmt_cars->fetch(PDO::FETCH_ASSOC)['total_cars'];
+
+$sql_total_customers = "SELECT COUNT(*) AS total_customers FROM customers";
+$stmt_customers = $pdo->prepare($sql_total_customers);
+$stmt_customers->execute();
+$total_customers = $stmt_customers->fetch(PDO::FETCH_ASSOC)['total_customers'];
+
+$sql_available = "SELECT COUNT(*) AS total_available FROM cars WHERE status = 'available'";
+$stmt_available = $pdo->prepare($sql_available);
+$stmt_available->execute();
+$total_available = $stmt_available->fetch(PDO::FETCH_ASSOC)['total_available'];
+
+
 
 $sql_rentals = "SELECT COUNT(*) AS active_rentals FROM rental WHERE rental_status = 'active'";
 $stmt_rentals = $pdo->prepare($sql_rentals);
@@ -78,6 +89,27 @@ $total_earnings = $stmt_earnings->fetch(PDO::FETCH_ASSOC)['total_earnings'] ?? 0
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Customers</h5>
+                            <p class="display-4"><?php echo $total_customers; ?></p>
+                          <button  class="btn btn-primary">Total Customers></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Available Cars</h5>
+                            <p class="display-4"><?php echo $total_available; ?></p>
+                          <button  class="btn btn-primary">Total Customers></button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>

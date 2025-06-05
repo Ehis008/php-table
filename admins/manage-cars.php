@@ -14,7 +14,38 @@ $success = $_SESSION['success'] ?? null;
 $user_input = $_POST ?? [];
 unset($_SESSION['success']);
 
-// Handle form submission
+// Handle delete car
+if (isset($_POST['delete_car']) && isset($_POST['car_id'])) {
+    $car_id = (int)$_POST['car_id'];
+
+    // Fetch image filename
+    $sql = "SELECT image FROM cars WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$car_id]);
+    $car = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Delete from database
+    $sql = "DELETE FROM cars WHERE id = ?";
+    $stmt = $pdo->prepare($sql);
+    $executed = $stmt->execute([$car_id]);
+
+    if ($executed) {
+        // Delete image file if exists
+        if ($car && $car['image']) {
+            $image_path = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'CarRentalApp' . DIRECTORY_SEPARATOR . 'carimages' . DIRECTORY_SEPARATOR . $car['image'];
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
+        }
+        $_SESSION['success'] = "Car deleted successfully.";
+    } else {
+        $_SESSION['error'] = "Failed to delete car.";
+    }
+    header("Location: ../admins/manage-cars.php");
+    exit;
+}
+
+// Handle form submission (add car)
 if (isset($_POST['add_car'])) {
     $make = trim($_POST['make']);
     $model = trim($_POST['model']);
@@ -108,9 +139,9 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <main>
         <!-- Header Section -->
         <section class="header-section">
-            <div class="container">
+            <div class="container text-white">
                 <h1>Manage Cars</h1>
-                <p class="lead">Add, edit, or delete cars in the fleet.</p>
+                <p class="lead">Add or Delete Cars In The Fleet.</p>
             </div>
         </section>
 
@@ -128,6 +159,13 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php echo htmlspecialchars($success); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?php echo htmlspecialchars($_SESSION['error']); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php unset($_SESSION['error']); ?>
                 <?php endif; ?>
                 <div class="card mb-4">
                     <div class="card-body">
@@ -203,7 +241,6 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <a href="../admins/manage-cars.php?edit=<?php echo $car['id']; ?>" class="btn btn-secondary btn-sm">Edit</a>
                                             <form method="POST" style="display:inline;">
                                                 <input type="hidden" name="car_id" value="<?php echo $car['id']; ?>">
                                                 <button type="submit" name="delete_car" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure you want to delete this car?');">Delete</button>
@@ -211,7 +248,7 @@ $cars = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <?php if ($car['status'] === 'available'): ?>
                                                 <a href="../cars.php?id=<?php echo $car['id']; ?>" class="btn btn-primary btn-sm">View</a>
                                             <?php else: ?>
-                                                <button class="btn btn-disabled btn-sm" disabled>Unavailable</button>
+                                                <button class="btn btn-secondary btn-sm" disabled>Unavailable</button>
                                             <?php endif; ?>
                                         </td>
                                     </tr>

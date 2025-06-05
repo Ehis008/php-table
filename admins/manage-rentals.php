@@ -66,7 +66,7 @@ $rentals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Header Section -->
     <section class="header-section">
-        <div class="container">
+        <div class="container mt-5 text-center">
             <h1>Manage Rentals</h1>
             <p class="lead">View and update rental statuses.</p>
         </div>
