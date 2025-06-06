@@ -1,13 +1,6 @@
-<style>
-    .nav-link i, .btn i {
-        margin-right: 0.5rem;
-        font-size: 1.1rem;
-    }
-</style>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid px-4">
-        <a class="navbar-brand" href="/index.php"><i class="bi bi-car-front"></i> DriveLite Rentals</a>
+        <a class="navbar-brand" href="index.php"><i class="bi bi-car-front"></i> DriveLite Rentals</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,7 +26,7 @@
             </ul>
             <?php if (isset($_SESSION['customer_id'])): ?>
                 <span class="navbar-text me-3"><i class="bi bi-person"></i> Customer</span>
-                <a href="logout.php" class="btn btn-outline-danger"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                <a href="logout.php" class="btn btn-outline-light"><i class="bi bi-box-arrow-right"></i> Logout</a>
             <?php else: ?>
                 <a href="login.php" class="btn btn-primary"><i class="bi bi-person"></i> Login</a>
             <?php endif; ?>

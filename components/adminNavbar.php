@@ -49,7 +49,7 @@ if (isset($_POST['logout'])) {
             </ul>
             <?php if (isset($_SESSION['admin_id'])): ?>
                 <span class="navbar-text me-3"><i class="bi bi-person"></i> Admin</span>
-                <a href="../logout.php" class="btn btn-outline-danger"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                <a href="../logout.php" class="btn btn-outline-light"><i class="bi bi-box-arrow-right"></i> Logout</a>
             <?php else: ?>
                 <a href="/admin/login.php" class="btn btn-primary"><i class="bi bi-person"></i> Admin Login</a>
             <?php endif; ?>
